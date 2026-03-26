@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af11143f6358b9c4eaa95cb48afb72cf, type: 3}
+  m_Name: ActiveTrainingConfig
+  m_EditorClassIdentifier: 
+  stimulusRadiusMeters: 1.5
+  fixationDistanceMeters: 1.5
+  sessionDurationMinutes: 10
+  stimulusOnMs: 800
+  gapBetweenStimuliMs: 400
+  gapBetweenSetsMs: 1000
+  fixationSizeDeg: 0.4
+  fixationVerticalRandom: 1
+  fixationVerticalRangeDeg: 3
+  fixationEventMinSec: 2
+  fixationEventMaxSec: 5
+  fixationEventDurationSec: 1
+  fixationColorNormal: {r: 1, g: 1, b: 1, a: 1}
+  fixationColorTarget: {r: 0, g: 1, b: 0, a: 1}
+  stimulusSizeDeg: 1.2
+  eccentricityDeg: 10
+  peripheralPitchDeg: 0
+  motionSpeedDegPerSec: 25
+  eyeMode: 0
+  promoteSuccessRate: 0.9
+  promoteMaxErrorRate: 0.1
+  sizeStepDeg: 0.2
+  eccentricityStepDeg: 2
+  speedStepDegPerSec: 5

@@ -97,12 +97,6 @@ A Unity-based visual field training application designed to improve reaction tim
 
 ---
 
-### 🧭 Additional Systems
-- **Hemifield** – Handles left/right visual field logic.
-- **RoadScenario** – Base logic for road-based simulations.
-
----
-
 ## 🎮 How It Works
 
 1. User enters:

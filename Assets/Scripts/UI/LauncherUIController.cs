@@ -14,12 +14,22 @@ public class LauncherUIController : MonoBehaviour
     [Header("Top fields")]
     public TMP_InputField inputPatientName;
     public TMP_InputField inputPatientId;
-    public TMP_Dropdown dropdownEye;
+    //public TMP_Dropdown dropdownEye;
+
+    [Header("Eye Selection")]
+    public Toggle toggleEyeRight;
+    public Toggle toggleEyeLeft;
 
     [Header("Timing (ms/min)")]
     public TMP_InputField inputStimulusOnMs;
     public TMP_InputField inputGapBetweenSetsMs;
     public TMP_InputField inputSessionMinutes;
+
+    [Header("Stage A Color Mode")]
+    public Toggle toggleColorNormal;
+    public Toggle toggleColorProtanopia;
+    public Toggle toggleColorDeuteranopia;
+    public Toggle toggleColorTritanopia;
 
     [Header("Stimulus / Motion")]
     public Toggle RandomFixationPoint;
@@ -68,6 +78,7 @@ public class LauncherUIController : MonoBehaviour
         public int gapBetweenStimuliMs;
         public int gapBetweenSetsMs;
         public int sessionMinutes;
+        public string stageAColorMode;
 
         public float motionSpeed;
         public string motionDirection;
@@ -294,7 +305,50 @@ public class LauncherUIController : MonoBehaviour
 
         s.patientName = inputPatientName ? inputPatientName.text.Trim() : "";
         s.patientId = inputPatientId ? inputPatientId.text.Trim() : "";
-        s.eye = dropdownEye ? dropdownEye.options[dropdownEye.value].text : "Right";
+        //s.eye = dropdownEye ? dropdownEye.options[dropdownEye.value].text : "Right";
+        bool rightEye = toggleEyeRight != null && toggleEyeRight.isOn;
+        bool leftEye = toggleEyeLeft != null && toggleEyeLeft.isOn;
+        bool normalOn = toggleColorNormal != null && toggleColorNormal.isOn;
+        bool protOn = toggleColorProtanopia != null && toggleColorProtanopia.isOn;
+        bool deutOn = toggleColorDeuteranopia != null && toggleColorDeuteranopia.isOn;
+        bool tritOn = toggleColorTritanopia != null && toggleColorTritanopia.isOn;
+
+        int colorCount = (normalOn ? 1 : 0) + (protOn ? 1 : 0) + (deutOn ? 1 : 0) + (tritOn ? 1 : 0);
+
+
+        int eyeCount = (rightEye ? 1 : 0) + (leftEye ? 1 : 0);
+
+        if (eyeCount == 0)
+        {
+            error = "Please choose which eye to train.";
+            return false;
+        }
+
+        if (eyeCount > 1)
+        {
+            error = "Please choose only one eye.";
+            return false;
+        }
+
+        s.eye = rightEye ? "Right" : "Left";
+
+        if (colorCount == 0)
+        {
+            error = "Please choose a color mode.";
+            return false;
+        }
+
+        if (colorCount > 1)
+        {
+            error = "Please choose only one color mode.";
+            return false;
+        }
+
+        if (normalOn) s.stageAColorMode = "Normal";
+        else if (protOn) s.stageAColorMode = "Protanopia";
+        else if (deutOn) s.stageAColorMode = "Deuteranopia";
+        else s.stageAColorMode = "Tritanopia";
+
 
         if (string.IsNullOrWhiteSpace(s.patientName))
         {
@@ -419,8 +473,9 @@ public class LauncherUIController : MonoBehaviour
     {
         PlayerPrefs.SetString(KEY_PATIENT_NAME, s.patientName);
         PlayerPrefs.SetString(KEY_PATIENT_ID, s.patientId);
-        PlayerPrefs.SetString(KEY_EYE, s.eye);
-
+        //PlayerPrefs.SetString(KEY_EYE, s.eye);
+        PlayerPrefs.SetString("eye", s.eye);
+        PlayerPrefs.SetString("stageAColorMode", s.stageAColorMode);
         PlayerPrefs.SetInt(KEY_STIM_ON, s.stimulusOnMs);
         PlayerPrefs.SetInt(KEY_GAP_STIM, s.gapBetweenStimuliMs);
         PlayerPrefs.SetInt(KEY_GAP_SETS, s.gapBetweenSetsMs);
@@ -438,15 +493,26 @@ public class LauncherUIController : MonoBehaviour
 
     private void LoadSettingsFromPrefs()
     {
+        string colorMode = PlayerPrefs.GetString("stageAColorMode", "Normal");
+
+        if (toggleColorNormal) toggleColorNormal.isOn = (colorMode == "Normal");
+        if (toggleColorProtanopia) toggleColorProtanopia.isOn = (colorMode == "Protanopia");
+        if (toggleColorDeuteranopia) toggleColorDeuteranopia.isOn = (colorMode == "Deuteranopia");
+        if (toggleColorTritanopia) toggleColorTritanopia.isOn = (colorMode == "Tritanopia");
+
         if (inputPatientName) inputPatientName.text = PlayerPrefs.GetString(KEY_PATIENT_NAME, "");
         if (inputPatientId) inputPatientId.text = PlayerPrefs.GetString(KEY_PATIENT_ID, "");
 
-        if (dropdownEye)
-        {
-            string eye = PlayerPrefs.GetString(KEY_EYE, dropdownEye.options[dropdownEye.value].text);
-            int idx = dropdownEye.options.FindIndex(o => string.Equals(o.text, eye, StringComparison.OrdinalIgnoreCase));
-            if (idx >= 0) dropdownEye.value = idx;
-        }
+        //if (dropdownEye)
+        //{
+        //    string eye = PlayerPrefs.GetString(KEY_EYE, dropdownEye.options[dropdownEye.value].text);
+        //    int idx = dropdownEye.options.FindIndex(o => string.Equals(o.text, eye, StringComparison.OrdinalIgnoreCase));
+        //    if (idx >= 0) dropdownEye.value = idx;
+        //}
+        string eye = PlayerPrefs.GetString("eye", "");
+        if (toggleEyeRight) toggleEyeRight.isOn = (eye == "Right");
+        if (toggleEyeLeft) toggleEyeLeft.isOn = (eye == "Left");
+
 
         if (inputStimulusOnMs) inputStimulusOnMs.text = PlayerPrefs.GetInt(KEY_STIM_ON, 800).ToString();
         if (inputGapBetweenSetsMs) inputGapBetweenSetsMs.text = PlayerPrefs.GetInt(KEY_GAP_SETS, 2000).ToString();

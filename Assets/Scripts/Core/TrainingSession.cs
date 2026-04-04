@@ -91,13 +91,17 @@ public class TrainingSession : MonoBehaviour
 
         AdaptiveDifficulty.Apply(config, result);
 
-        string report = BuildHumanReport(result);
-
-        // Save launcher text + actual files
-        PlayerPrefs.SetString("lastSessionReport", report);
+        //string report = BuildHumanReport(result);
+        //// Save launcher text + actual files
+        //PlayerPrefs.SetString("lastSessionReport", report);
+        //PlayerPrefs.Save();
+        //SessionLogger.Save(result, report);
+        string fullReport = BuildHumanReport(result);
+        string launcherReport = BuildLauncherReport(result);
+        PlayerPrefs.SetString("lastSessionReport", launcherReport);
         PlayerPrefs.Save();
+        SessionLogger.Save(result, fullReport);
 
-        SessionLogger.Save(result, report);
 
         Debug.Log("Training finished. Returning to Launcher...");
 
@@ -137,6 +141,11 @@ public class TrainingSession : MonoBehaviour
     {
         string name = PlayerPrefs.GetString("patientName", "");
         string id = PlayerPrefs.GetString("patientId", "");
+        string eye = PlayerPrefs.GetString("eye", "");
+
+        string eyeLine = "";
+        if (eye == "Right") eyeLine = "Training right eye";
+        else if (eye == "Left") eyeLine = "Training left eye";
 
         int totalAnswered = r.answeredTrials;
         int totalCorrect = r.answeredCorrect;
@@ -160,6 +169,7 @@ public class TrainingSession : MonoBehaviour
         return
             $"Name: {name}\n" +
             $"ID: {id}\n" +
+            $"{eyeLine}\n\n" +
             $"Total Correct Answers: {totalCorrect} of {totalAnswered} , {totalPct:0}%\n" +
             $"Fixation interactions: {fixHit} of {fixTotal} , {fixPct:0}%\n" +
             $"True answers for same shapes: {samePressed} of {sameTotal} , {samePct:0}%\n" +
@@ -276,13 +286,18 @@ public class TrainingSession : MonoBehaviour
         sessionEnd = Time.timeAsDouble;
         result.sessionSeconds = (float)(sessionEnd - sessionStart);
 
-        string fullreport = BuildHumanReport(result);
+        //string fullreport = BuildHumanReport(result);
+        //string launcherReport = BuildLauncherReport(result);
+        //PlayerPrefs.SetString("lastSessionReport", launcherReport);
+        //PlayerPrefs.Save();
+        //// ✅ Save JSON + TXT + lastReportFilePath on ESC too
+        //SessionLogger.Save(result, fullreport);
+        string fullReport = BuildHumanReport(result);
         string launcherReport = BuildLauncherReport(result);
         PlayerPrefs.SetString("lastSessionReport", launcherReport);
         PlayerPrefs.Save();
+        SessionLogger.Save(result, fullReport);
 
-        // ✅ Save JSON + TXT + lastReportFilePath on ESC too
-        SessionLogger.Save(result, fullreport);
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("LauncherScene");
     }

@@ -344,10 +344,22 @@ MonoBehaviour:
   boardRect: {fileID: 161870844}
   leftImg: {fileID: 1525398494}
   rightImg: {fileID: 1007111141}
-  shapeSprites:
+  normalSprites:
   - {fileID: 21300000, guid: f8e7f9f409bdc8843ae70507de92e75b, type: 3}
-  - {fileID: 21300000, guid: b3618f96679f909488cc4eff573e67ea, type: 3}
   - {fileID: 21300000, guid: 01d8016f1dd445147af434a637b15bb8, type: 3}
+  - {fileID: 21300000, guid: b3618f96679f909488cc4eff573e67ea, type: 3}
+  protanopiaSprites:
+  - {fileID: 21300000, guid: 7aa05824a2a43204b867d6d171a3d146, type: 3}
+  - {fileID: 21300000, guid: 7f68577062649c34bbe0fd25a06bd815, type: 3}
+  - {fileID: 21300000, guid: 14f5166cf68c66843bba3f9dd60c2520, type: 3}
+  deuteranopiaSprites:
+  - {fileID: 21300000, guid: 150299a27e190ea44afd64bbf82afe91, type: 3}
+  - {fileID: 21300000, guid: f23dd3405be596b46918b358003d16e2, type: 3}
+  - {fileID: 21300000, guid: 82db7ad550e928e46af36a32e0031ddb, type: 3}
+  tritanopiaSprites:
+  - {fileID: 21300000, guid: 91bb5119b4a16eb439a098772d0359f6, type: 3}
+  - {fileID: 21300000, guid: b0e66fac019754749ab3d862cf377424, type: 3}
+  - {fileID: 21300000, guid: a89c5cbe14250d44fb4052357157199f, type: 3}
   pixelsPerDeg: 65
 --- !u!224 &273433976
 RectTransform:
@@ -1086,6 +1098,9 @@ MonoBehaviour:
     peripheralCorrect: 0
     peripheralIncorrect: 0
     peripheralReactionTimes: []
+    answeredTrials: 0
+    answeredCorrect: 0
+    answeredReactionTimes: []
     matchTrials: 0
     matchCorrectPresses: 0
     nonMatchTrials: 0
@@ -2483,11 +2498,10 @@ MonoBehaviour:
   boardRect: {fileID: 893757594}
   leftImg: {fileID: 1579999861}
   rightImg: {fileID: 534346002}
-  shapeSprites:
-  - {fileID: 21300000, guid: 20d2617255db48e4e9a6bdea1e8fc7c8, type: 3}
-  - {fileID: 21300000, guid: d1b11dbc31bfaba4a9a7d0c0f5170b1b, type: 3}
-  - {fileID: 21300000, guid: f1843af2bae164c44a0440c3ed10ba14, type: 3}
-  - {fileID: 21300000, guid: 75b2a6bee11225f4a977e1d5f23e2d26, type: 3}
+  normalSprites: []
+  protanopiaSprites: []
+  deuteranopiaSprites: []
+  tritanopiaSprites: []
   pixelsPerDeg: 65
 --- !u!224 &1037314502
 RectTransform:

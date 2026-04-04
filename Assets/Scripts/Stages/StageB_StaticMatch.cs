@@ -103,7 +103,8 @@ public class StageB_StaticMatch : MonoBehaviour, ITrainingStage
             yield break;
         }
 
-        var sprites = boardUI.shapeSprites;
+        //var sprites = boardUI.shapeSprites;
+        var sprites = boardUI.GetActiveSpriteSet();
         if (sprites == null || sprites.Length < 2)
         {
             Debug.LogError("StageB_StaticMatch: Need at least 2 sprites in boardUI.shapeSprites.");

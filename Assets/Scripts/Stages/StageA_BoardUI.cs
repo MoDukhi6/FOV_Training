@@ -10,8 +10,11 @@ public class StageA_BoardUI : MonoBehaviour
     public Image leftImg;
     public Image rightImg;
 
-    [Header("Sprite library")]
-    public Sprite[] shapeSprites;
+    [Header("Sprite libraries")]
+    public Sprite[] normalSprites;
+    public Sprite[] protanopiaSprites;
+    public Sprite[] deuteranopiaSprites;
+    public Sprite[] tritanopiaSprites;
 
     [Header("Tuning")]
     [Tooltip("How many pixels represent 1 degree on the board.")]
@@ -66,7 +69,22 @@ public class StageA_BoardUI : MonoBehaviour
         moving = false;
     }
 
+    public Sprite[] GetActiveSpriteSet()
+    {
+        string mode = PlayerPrefs.GetString("stageAColorMode", "Normal");
 
+        switch (mode)
+        {
+            case "Protanopia":
+                return protanopiaSprites;
+            case "Deuteranopia":
+                return deuteranopiaSprites;
+            case "Tritanopia":
+                return tritanopiaSprites;
+            default:
+                return normalSprites;
+        }
+    }
 
     public void SetMotion(MotionDir motionDir, float speedDegPerSec)
     {
